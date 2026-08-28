@@ -1,19 +1,5 @@
-# [Project Title]
+# [🏦 Bank Customer Churn: Behavioral & Demographic Drivers of Attrition]
 > *One sentence. What did you analyze, build, or solve - and why does it matter?*
-
----
-
-## ⚙️ Project Type Flags
-> *Check what applies. This helps reviewers and collaborators understand the nature of the work at a glance. Delete this block before publishing.*
-
-- [ ] Exploratory Data Analysis (EDA)
-- [ ] SQL Analysis / Querying
-- [ ] Dashboard / Data Visualization
-- [ ] Data Pipeline / ETL
-- [ ] Predictive Modelling / Machine Learning
-- [ ] Data Cleaning / Wrangling
-- [ ] End-to-End (multiple of the above)
-- [ ] Other: ___________
 
 ---
 
@@ -66,361 +52,164 @@
 
 ---
 
-## 2. Objectives
+## 🎯 Objectives
 
-<!--
-  Write objectives that are specific enough to succeed or fail.
-  Use action-oriented verbs: Identify, Determine, Quantify, Build, Evaluate.
-
-  WHAT GOOD LOOKS LIKE:
-  ✅ "Determine whether customer churn rate correlates with support ticket volume."
-  ✅ "Identify the top three revenue-driving product categories across all regions."
-  ✅ "Build a reproducible pipeline that ingests and cleans daily sales exports."
-
-  WHAT TO AVOID:
-  ❌ "Explore the data."
-  ❌ "Gain insights."
-  ❌ "Understand trends."
-  (These can't fail - which means they can't succeed either.)
--->
-
-- **Primary Objective:** [The main thing you set out to do]
-- **Secondary Objective 1:** [Supporting goal]
-- **Secondary Objective 2:** [Supporting goal]
-- **Secondary Objective 3:** [Remove if not applicable]
+- **Primary Objective:** [Identify the key demographic and behavioral drivers of customer churn to guide targeted retention strategies.]
+- **Specific Objective 1:** [Evaluate individual customer variables (geography, age, activity, product depth, FICO tiers, and salary) to separate true churn drivers from non-predictive factors.]
+- **Specific Objective 2:** [Build a composite high-risk profile to pinpoint the most vulnerable customer segment and measure its share of total churn volume.]
 
 > 💡 *Every analysis decision in this project traces back to one of these objectives.*
 
 ---
 
-## 3. Project Scope & Tools
+## 🛠️ Project Scope & Tools
 
-### Scope
-
-<!--
-  WHAT GOOD LOOKS LIKE:
-  In Scope: "Transaction-level data for Regions A–E, Jan 2023–Jun 2024.
-             Analysis covers revenue, return rates, and product category performance."
-  Out of Scope: "Customer demographics and marketing spend data were excluded -
-                 demographic data was incomplete for two regions, and marketing
-                 data sits in a separate system outside this engagement."
-
-  WHAT TO AVOID:
-  ❌ Leaving Out of Scope blank. This is the section that protects your credibility.
-     If you don't define the fence, reviewers assume you missed things.
--->
+### Project Scope
 
 | Dimension | Details |
 |-----------|---------|
-| **In Scope** | [What is included - data sources, time periods, segments] |
-| **Out of Scope** | [What you explicitly excluded - and a brief reason why] |
-| **Time Period** | [Date range of the data or the project itself] |
-| **Granularity** | [Unit of analysis - row-level, daily aggregates, per-user, etc.] |
+| **In Scope** | Analysis of **10,000 retail banking customer records** across **France, Germany, and Spain**. Evaluation includes demographic attributes (**Age, Gender, Country**), financial metrics (**FICO Credit Score, Account Balance, Estimated Salary**), engagement indicators (**Active Membership, Product Count, Credit Card Status**), and customer churn outcomes (`Exited`). |
+| **Out of Scope** | Predictive machine learning models (such as Random Forest and Logistic Regression), customer sentiment or satisfaction surveys, customer support ticket logs, and detailed transaction-level data, as these were not available in the source dataset. |
+| **Time Period** | Cross-sectional snapshot from a historical Kaggle benchmark dataset. Analysis conducted in **2026**. |
+| **Granularity** | Customer-level data, with **one row representing one unique customer** (`customer_id`). |
+---
 
 ### Tools & Technologies
 
-<!--
-  List only what you actually used on this project.
-  This is not your skills section - it's the project's technical context.
--->
-
 | Category | Tool(s) Used |
-|----------|-------------|
-| Data Storage | [e.g., PostgreSQL, CSV files, BigQuery, S3] |
-| Data Processing | [e.g., Python, R, SQL, Excel, dbt] |
-| Analysis | [e.g., pandas, dplyr, custom SQL queries] |
-| Visualization | [e.g., Matplotlib, Tableau, Power BI, Looker] |
-| Version Control | [e.g., Git / GitHub] |
-| Documentation | [e.g., Markdown, Notion] |
-| Other | [Any additional tools] |
+|-----------|-------------|
+| **Data Storage** | PostgreSQL, CSV (Raw Kaggle Dataset) |
+| **Data Processing** | PostgreSQL (DDL, table creation, data integrity validation, data type conversion) |
+| **Analysis** | SQL (Aggregations, CASE Statements, Subqueries, Window Functions, Customer Segmentation) |
+| **Database Client** | pgAdmin 4 |
+| **Version Control** | Git, GitHub |
+| **Documentation** | Markdown (`README.md`) |
+---
+
+### Technology Stack
+
+- **PostgreSQL** → Database management and analytical querying.
+- **pgAdmin 4** → Database administration and query execution.
+- **SQL** → Data cleaning, transformation, segmentation, and business analysis.
+- **Git & GitHub** → Version control and project portfolio hosting.
+- **Markdown** → Project documentation and reporting.
 
 ---
 
-## 4. Repository Structure
+## ⚙️Data Source & Schema
 
+### Data Source
+
+- **Origin:** Kaggle - Bank Customer Churn Dataset
+- **Dataset Structure:** Contains **10,000 unique customer records** from **France, Germany, and Spain**, with 13 core customer and banking attributes.
+- **Format:** Flat CSV file imported into PostgreSQL for analysis.
+
+---
+## Data Dictionary & Schema Definition
+
+| Column Name | Data Type | Constraints | Description |
+|------------|-----------|------------|-------------|
+| `customer_id` | INTEGER | Unique Identifier | Unique numerical identifier assigned to each customer. |
+| `surname` | VARCHAR(255) | NOT NULL | Customer's surname used for identification purposes. |
+| `credit_score` | INTEGER | 350-850 | FICO-based score representing the customer's creditworthiness. |
+| `geography` | VARCHAR(255) | Categorical | Customer's country of residence (`France`, `Germany`, or `Spain`). |
+| `gender` | VARCHAR(50) | Categorical | Customer gender (`Male` or `Female`). |
+| `age` | INTEGER | Continuous | Customer age in years. Analysis includes age-group segmentation. |
+| `tenure` | INTEGER | 0-10 Years | Number of years the customer has maintained a relationship with the bank. |
+| `balance` | NUMERIC | Monetary Value | Current account balance held by the customer. |
+| `num_of_products` | INTEGER | 1-4 | Total number of banking products or services owned by the customer. |
+| `has_cr_card` | INTEGER | Binary (0/1) | Indicates credit card ownership (`1 = Yes`, `0 = No`). |
+| `is_active_member` | INTEGER | Binary (0/1) | Indicates account activity status (`1 = Active`, `0 = Inactive`). |
+| `estimated_salary` | NUMERIC | Monetary Value | Estimated annual salary of the customer. |
+| `exited` | INTEGER | Binary (0/1) | Customer churn indicator (`1 = Exited`, `0 = Retained`). |
+---
+
+## 📊Pre-Analysis 
+
+Before conducting the analysis, the dataset was imported into PostgreSQL and subjected to a series of quality assurance checks to ensure data accuracy, completeness, and structural integrity.
+
+### Database Setup
+
+The first step was creating a relational table that mirrors the structure of the source dataset.
+
+```sql
+
+CREATE TABLE bank_churn (
+customer_id INTEGER,
+surname VARCHAR(255),
+credit_score INTEGER,
+geography VARCHAR(255),
+gender VARCHAR(50),
+age INTEGER,
+tenure INTEGER,
+balance NUMERIC,
+num_of_products INTEGER,
+has_cr_card INTEGER,
+is_active_member INTEGER,
+estimated_salary NUMERIC,
+exited INTEGER
+);
 ```
-[project-root]/
-│
-├── data/
-│   ├── raw/                  # Original, unmodified source data - never edited
-│   ├── processed/            # Cleaned and transformed data
-│   └── external/             # Reference data, lookup tables, third-party files
-│
-├── notebooks/                # Jupyter, R Markdown, or Colab notebooks
-│
-├── scripts/                  # Reusable .py, .R, or .sh processing files
-│
-├── queries/                  # SQL files (retain this folder for SQL-heavy projects)
-│   ├── exploratory/          # Ad-hoc or investigative queries
-│   ├── transformations/      # Cleaning and reshaping logic
-│   └── final/                # Production-ready or presentation queries
-│
-├── reports/                  # Final outputs: PDFs, slide decks, Word docs
-│
-├── visuals/                  # Exported charts, dashboard screenshots, ERD diagrams
-│
-├── docs/                     # Data dictionaries, schema notes, reference material
-│
-├── project_metadata.yml      # Machine-readable metadata (optional)
-└── README.md                 # You are here
+I began by creating a PostgreSQL table to store the customer churn dataset and assigning appropriate data types to each attribute.
+
+- `INTEGER` was used for numeric identifiers, counts, and binary indicators.
+- `VARCHAR` was used for categorical and text-based attributes.
+- `NUMERIC` was assigned to financial variables such as `balance` and `estimated_salary` to preserve decimal precision.
+
+This schema provided a structured foundation for data validation and analytical querying.
+---
+
+### Initial Data Inspection
+
+After importing the CSV file, I performed a quick inspection of the dataset to verify that the import process was successful.
+```sql
+SELECT *
+FROM bank_churn
+LIMIT 10;
 ```
-
-> ⚠️ *Delete folders you didn't use. An empty folder is worse than no folder.*
-> SQL-heavy projects: keep `queries/`. Analysis-only projects: keep `notebooks/`. Both? Keep both.
+Reviewing a sample of records helped confirm that:
+- Columns were mapped correctly.
+- Data types appeared consistent with expectations.
+- Categorical values were imported properly.
+- No column shifting or formatting issues occurred during import.
+- 
+This initial inspection served as an important quality check before deeper analysis.
 
 ---
 
-## 5. Data Workflow
+### Data Integrity & Missing Value Audit
 
-<!--
-  Show how data moved through your project - from source to output.
-  Every transformation decision should be traceable here.
+To assess data completeness, I checked every column for missing values.
 
-  WHAT GOOD LOOKS LIKE:
-  1. Source: "Monthly CSV exports pulled from the internal POS system.
-              Five files, one per region, covering Jan 2023–Jun 2024."
-  2. Ingestion: "Loaded into Python using pandas. Files concatenated into
-                 a single dataframe (approx. 340,000 rows)."
-  3. Cleaning: "Removed 1.2% of rows with null transaction IDs.
-                Standardised date formats across regional files.
-                Resolved product category naming inconsistencies (3 variants → 1)."
-  4. Transformation: "Created a returns_rate field at product-category level.
-                      Aggregated to weekly and regional grain for trend analysis."
-  5. Analysis: "Descriptive statistics, regional comparison, return rate
-                segmentation by product category."
-  6. Output: "Summary report (PDF), annotated notebook, processed CSV."
-
-  WHAT TO AVOID:
-  ❌ "Data was cleaned and analysed." (No chain. No decisions. No trust.)
--->
-
+```sql
+SELECT
+COUNT(*) - COUNT(customer_id) AS missing_customer_id,
+COUNT(*) - COUNT(surname) AS missing_surname,
+COUNT(*) - COUNT(credit_score) AS missing_credit_score,
+COUNT(*) - COUNT(geography) AS missing_geography,
+COUNT(*) - COUNT(gender) AS missing_gender,
+COUNT(*) - COUNT(age) AS missing_age,
+COUNT(*) - COUNT(tenure) AS missing_tenure,
+COUNT(*) - COUNT(balance) AS missing_balance,
+COUNT(*) - COUNT(num_of_products) AS missing_num_of_products,
+COUNT(*) - COUNT(has_cr_card) AS missing_has_cr_card,
+COUNT(*) - COUNT(is_active_member) AS missing_is_active_member,
+COUNT(*) - COUNT(estimated_salary) AS missing_estimated_salary,
+COUNT(*) - COUNT(exited) AS missing_exited
+FROM bank_churn;
 ```
-[Data Source(s)]
-      ↓
-[Ingestion / Collection Method]
-      ↓
-[Cleaning & Transformation]
-      ↓
-[Analysis / Modelling / Querying]
-      ↓
-[Output / Visualisation / Reporting]
-```
+Data quality is critical for producing reliable analytical insights. To verify completeness, I compared the total row count against the non-null count for each column.
 
-1. **Source:** [Where did the data come from? Format, size, access method.]
-2. **Ingestion:** [How was it brought in?]
-3. **Cleaning:** [What issues did you find and fix?]
-4. **Transformation:** [What new fields, aggregations, or structures did you create?]
-5. **Analysis:** [What methods - statistical, visual, query-based, model-based?]
-6. **Output:** [What form do the results take?]
+**Result:** No missing values were detected across any field in the dataset.
 
----
+This confirmed that:
+- The dataset was fully populated.
+- No imputation techniques were required.
+- All customer records were eligible for analysis.
 
-## 6. Data Model & Schema
 
-<!--
-  Define your fields so that someone reading your analysis can follow along
-  without digging through your code.
 
-  WHAT GOOD LOOKS LIKE (one row example):
-  | transaction_id | string | Unique identifier per sales transaction | TXN-00482 |
-  | return_flag    | boolean | Whether the transaction included a return | TRUE |
-  | region_code    | string | Two-letter identifier for store region | "NE" |
 
-  WHAT TO AVOID:
-  ❌ Skipping this section because "the field names are self-explanatory."
-     They're not. Not to a reviewer. Not to you in six months.
-
-  📌 FOR SQL PROJECTS: If you have multiple tables, create one block per table.
-     Describe join keys and relationships here. Your ERD (Section 7) will
-     visualise what this section describes in text.
-
-  📌 FOR NON-SQL PROJECTS: Describe the shape of your dataset informally
-     if a formal schema doesn't apply. Even one paragraph is more helpful than nothing.
--->
-
-### Dataset / Table: `[name]`
-
-| Field Name | Data Type | Description | Example Value |
-|------------|-----------|-------------|---------------|
-| `[field_1]` | [string / int / date / float / boolean] | [What this field represents] | [Non-sensitive example] |
-| `[field_2]` | [string / int / date / float / boolean] | [What this field represents] | [Non-sensitive example] |
-| `[field_3]` | [string / int / date / float / boolean] | [What this field represents] | [Non-sensitive example] |
-
-> **Row count (approx.):** [X rows]
-> **Date range:** [Start] – [End]
-> **Key join / relationship:** [e.g., `orders.customer_id` → `customers.id`]
-
-*Add additional table blocks as needed for multi-table projects.*
-
----
-
-## 7. ERD - Entity Relationship Diagram
-### *(Primarily for SQL Projects - remove this section if not applicable)*
-
-<!--
-  An ERD shows how your tables connect to each other visually.
-  It is the fastest way for a reviewer to understand the data structure
-  of a SQL project without reading every query.
-
-  HOW TO INCLUDE YOUR ERD:
-  Option A - Image embed (most common):
-    Export your ERD from dbdiagram.io, DBeaver, Lucidchart, or similar.
-    Save to /visuals/erd.png and reference it below.
-
-  Option B - dbdiagram.io code block (version-controllable):
-    Paste your schema definition code directly in the fenced block below.
-    Anyone can paste it into dbdiagram.io to regenerate the visual.
-
-  Option C - Mermaid diagram (renders natively in GitHub):
-    Use the mermaid code block syntax below.
-    GitHub will render this as a diagram automatically.
-
-  PICK ONE. Don't use all three. Delete the options you don't use.
--->
-
-### Option A - Embedded Image
-![ERD Diagram](visuals/erd.png)
-*[Brief caption: e.g., "Three-table schema - orders, customers, and products joined on shared IDs."]*
-
----
-
-### Option B - dbdiagram.io Schema Definition
-```
-Table orders {
-  order_id    int     [pk]
-  customer_id int     [ref: > customers.customer_id]
-  product_id  int     [ref: > products.product_id]
-  order_date  date
-  amount      float
-}
-
-Table customers {
-  customer_id int  [pk]
-  region_code string
-  signup_date date
-}
-
-Table products {
-  product_id   int    [pk]
-  category     string
-  unit_price   float
-}
-```
-*Paste this into [dbdiagram.io](https://dbdiagram.io) to view the visual.*
-
----
-
-### Option C - Mermaid Diagram *(renders on GitHub)*
-```mermaid
-erDiagram
-    ORDERS {
-        int order_id PK
-        int customer_id FK
-        int product_id FK
-        date order_date
-        float amount
-    }
-    CUSTOMERS {
-        int customer_id PK
-        string region_code
-        date signup_date
-    }
-    PRODUCTS {
-        int product_id PK
-        string category
-        float unit_price
-    }
-    ORDERS ||--o{ CUSTOMERS : "placed by"
-    ORDERS ||--o{ PRODUCTS : "contains"
-```
-
----
-
-**Table Relationships Summary:**
-
-| Relationship | Join Key | Type |
-|-------------|----------|------|
-| `orders` → `customers` | `customer_id` | Many-to-One |
-| `orders` → `products` | `product_id` | Many-to-One |
-| [Add rows as needed] | | |
-
----
-
-## 8. Analysis & Metrics
-
-<!--
-  Explain what you measured and how - before you share what you found.
-
-  WHAT GOOD LOOKS LIKE:
-  Metric: "Customer Return Rate"
-  Definition: "Number of transactions flagged as returns divided by total
-               transactions, calculated at product-category and regional grain."
-  Why It Matters: "Return rate - not sales volume - was hypothesised to
-                  explain regional revenue gaps. This metric tests that hypothesis."
-
-  WHAT TO AVOID:
-  ❌ Defining a metric only in code: SUM(returns) / COUNT(transaction_id)
-     That's an implementation. Write the plain-language definition here.
-     Both belong in your project - the definition in the README,
-     the implementation in the code.
--->
-
-### Analytical Approach
-
-[Describe how you approached the analysis. Were you exploring patterns? Testing a hypothesis? Building and validating a pipeline? Be honest about your method - exploratory work is valid, just call it that.]
-
-### Key Metrics Defined
-
-| Metric | Plain-Language Definition | Why It Matters |
-|--------|--------------------------|----------------|
-| `[Metric 1]` | [What it measures, in one sentence] | [What decision or question it answers] |
-| `[Metric 2]` | [What it measures, in one sentence] | [What decision or question it answers] |
-| `[Metric 3]` | [What it measures, in one sentence] | [What decision or question it answers] |
-
-### Methods Used
-
-- [e.g., Descriptive statistics - distribution, central tendency, outlier detection]
-- [e.g., Trend analysis across [time period]]
-- [e.g., Segmentation / group comparison by [dimension]]
-- [e.g., Correlation analysis between [variable A] and [variable B]]
-- [e.g., SQL window functions for [specific aggregation]]
-- [e.g., Custom aggregation or transformation logic in [tool]]
-
----
-
-## 9. Key Insights
-
-<!--
-  Findings + implications. Not just what happened - what it means.
-
-  WHAT GOOD LOOKS LIKE:
-  ✅ "Return rates, not sales volume, explain Region A's underperformance.
-      Region A's return rate on home goods was 34% - more than double the
-      company average. Revenue was not lost at the point of sale; it was
-      lost post-sale through refunds. This points to a fulfilment or
-      product quality issue specific to that region, not a demand problem."
-
-  WHAT TO AVOID:
-  ❌ "Region A had lower revenue than other regions in Q4."
-     (That's an observation. It describes what happened.
-      An insight says what it means and where to look next.)
-
-  Aim for 3–6 insights. Quality over quantity.
--->
-
-**Insight 1: [Short descriptive headline]**
-[What you found + what it suggests. One short paragraph.]
-
-**Insight 2: [Short descriptive headline]**
-[What you found + what it suggests.]
-
-**Insight 3: [Short descriptive headline]**
-[What you found + what it suggests.]
-
-**Insight 4 (if applicable): [Short descriptive headline]**
-[What you found + what it suggests.]
-
----
 
 ## 10. Recommendations
 
