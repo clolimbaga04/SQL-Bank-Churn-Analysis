@@ -1,3 +1,5 @@
+<img width="576" height="324" alt="images" src="https://github.com/user-attachments/assets/cf9f6951-bb40-471b-9e4f-b2d823359bcc" />
+
 # 🏦 Bank Customer Churn: Behavioral & Demographic Drivers of Attrition
 ***Decoding Bank Churn: What Really Makes Customers Walk Away?***
 
