@@ -1,5 +1,5 @@
 # 🏦 Bank Customer Churn: Behavioral & Demographic Drivers of Attrition
-> *Decoding Bank Churn: What Really Makes Customers Walk Away?*
+***Decoding Bank Churn: What Really Makes Customers Walk Away?***
 
 > When a customer closes their bank account, who do you picture? 🤔💭
 
