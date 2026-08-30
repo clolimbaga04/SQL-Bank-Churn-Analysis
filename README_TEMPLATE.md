@@ -188,6 +188,8 @@ FROM
 WHERE 
     exited = 1;
 ```
+Overall Churn Rate: 20.37%
+
 ### 🌍 Question 2: Demographic - Geography
 **Does customer geographic location (France, Germany, Spain) influence account closure rates?**
 ```sql
@@ -439,108 +441,76 @@ This suggests that income level alone is not a strong predictor of customer chur
 
 With individual demographic, behavioral, and financial factors now assessed, the next step is to combine the strongest risk indicators—geography, older age groups, high account balances, and inactive status—to identify a clear high-risk customer profile.
 
+## Question 15 (Composite High-Risk Profile): What is the churn rate when stacking all proven high-risk variables into a single composite profile compared to the rest of the customer base?
 
-## 10. Recommendations
+Throughout the analysis, we examined each variable individually to distinguish meaningful churn drivers from factors that showed little impact. Financial indicators such as credit score and estimated salary showed almost no relationship with account closures. In contrast, several demographic, behavioral, and product-related factors consistently pointed to customers with higher churn risk.
 
-<!--
-  Action-oriented. Addressed to a real audience.
-  Tied explicitly to the insight that supports each one.
+The next step is to bring these findings together. By combining the strongest risk indicators identified in the earlier analysis, we can identify a specific customer segment that deserves immediate attention:
+- Geography: Germany
+- Gender: Female
+- Age: 40 years and older
+- Engagement: Inactive customers
+- Product Depth: Customers holding only one product
+```sql
+SELECT 
+    CASE 
+        WHEN geography = 'Germany' 
+             AND gender = 'Female' 
+             AND is_active_member = 0 
+             AND num_of_products = 1 
+             AND age >= 40 THEN 'Target High-Risk Profile'
+        ELSE 'All Other Customers' 
+    END AS customer_profile,
+    COUNT(customer_id) AS total_customers,
+    SUM(exited) AS total_churned,
+    ROUND(AVG(exited) * 100, 2) AS churn_rate_percentage
+FROM 
+    bank_churn
+GROUP BY 
+    customer_profile
+ORDER BY 
+    churn_rate_percentage DESC;
+```
+| Customer Profile | Total Customers | Total Churned | Churn Rate Percentage |
+|------------------|---------------:|--------------:|----------------------:|
+| Target High-Risk Profile | 200 | 144 | 72.00% |
+| All Other Customers | 9,800 | 1,893 | 19.32% |
 
-  WHAT GOOD LOOKS LIKE:
-  Priority: High
-  Recommendation: "Conduct a fulfilment audit for home goods deliveries
-                   in Region A - specifically investigating whether returns
-                   correlate with a particular warehouse, carrier, or SKU batch."
-  Based On: Insight 1 - return rate anomaly in Region A
-  Owner: Operations / Supply Chain team
+The combination of these factors reveals a significant retention risk. Among female customers in Germany aged 40 and above who are inactive and hold only one product, 72% have churned.
 
-  WHAT TO AVOID:
-  ❌ "Improve the return rate."
-     (Not actionable. Doesn't say who, how, or where to start.)
-  ❌ "Further analysis is needed."
-     (This is a placeholder, not a recommendation.)
--->
+This is substantially higher than the 19.32% churn rate among all other customers. In other words, customers matching this profile are nearly four times more likely to churn than the rest of the customer base.
 
-| Priority | Recommendation | Based On | Suggested Owner |
-|----------|---------------|----------|-----------------|
-| High | [Specific, actionable step] | [Insight it comes from] | [Who should act] |
-| Medium | [Specific, actionable step] | [Insight it comes from] | [Who should act] |
-| Low | [Exploratory or longer-term suggestion] | [Insight it comes from] | [Who should act] |
+This finding turns the analysis from simply describing who is leaving into identifying where the bank should act. Instead of applying broad and costly retention strategies to thousands of customers, the bank can focus its efforts on this concentrated group of 200 high-risk customers.
 
 ---
 
-## 11. Assumptions & Limitations
+## Recommendations
 
-<!--
-  WHAT GOOD LOOKS LIKE:
-  Assumption: "Transaction records were assumed to be complete for all five regions.
-               No validation was performed against source system record counts."
-  Limitation: "The analysis cannot distinguish between returns initiated by
-               the customer vs. returns initiated by the business (e.g., recalls).
-               If business-initiated returns are concentrated in Region A, the
-               return rate finding may reflect a policy decision, not a quality issue."
+- Prioritize retention efforts for **high-risk customers** (inactive, Germany-based, female, age 40+, and single-product holders).
+- Re-engage **inactive customers** through targeted outreach and personalized offers.
+- Encourage **single-product customers** to adopt a second relevant product.
+- Strengthen relationships with **older and high-balance customers** through personalized financial services.
+- Implement a **churn monitoring dashboard** to identify and address at-risk customers early.
+---
 
-  WHAT TO AVOID:
-  ❌ Leaving this section blank or writing "None known."
-     Every project has limitations. Documenting them is a sign of
-     analytical maturity - not a confession of failure.
--->
-
+### Assumptions & Limitations
 ### Assumptions
-- [What did you treat as true without being able to verify?]
-- [What simplifications did you make for scope or feasibility?]
-- [What domain rules or definitions did you accept as given?]
-
+- **Data Integrity:** Each row represents a unique customer and the dataset is free of duplicates.
+- **Engagement Validity:** The `is_active_member` flag accurately reflects customer engagement.
+ 
 ### Limitations
-- [What gaps exist in the data?]
-- [What analysis was out of scope but could affect interpretation?]
-- [What would a more rigorous version of this project include?]
-- [Are there known biases in the data source or collection method?]
+- **Snapshot Data:** No historical transactions or behavioral trends are available.
+- **Limited Detail:** Customer service interactions and specific product types are not included.
+- **No External Factors:** Competitor actions and economic conditions are not captured.
 
-> *The goal here is pre-emptive Q&A. What would a thoughtful skeptic push back on? Document the answer here, before they ask.*
-
----
-
-## 12. Future Enhancements
-
-<!--
-  WHAT GOOD LOOKS LIKE:
-  ✅ "Automate the monthly data pull from the POS export folder using
-      a scheduled Python script, replacing the current manual process."
-  ✅ "Expand the return rate analysis to include carrier-level data,
-      which was unavailable in this dataset but exists in the logistics system."
-
-  WHAT TO AVOID:
-  ❌ "Add a machine learning model."
-     (Vague, and disconnected from the actual findings of this project.)
-  ❌ Listing aspirational features that don't follow logically from the work.
--->
-
-- [ ] [Enhancement 1 - specific and traceable to a real gap in this project]
-- [ ] [Enhancement 2]
-- [ ] [Enhancement 3]
-- [ ] [Enhancement 4]
+> Note: The findings highlight **associations rather than causation** and should be interpreted accordingly.
 
 ---
 
-## 13. Deliverables
 
-| Deliverable | Description | Location |
-|-------------|-------------|----------|
-| [Name] | [What it contains] | [`/path/to/file`] |
-| [Name] | [What it contains] | [`/path/to/file`] |
-| [Name] | [What it contains] | [`/path/to/file`] |
+## Author
 
----
-
-## 14. Author
-
-**[Your Name]**
-[Your role or title - current or target]
-
-- 🔗 [LinkedIn URL]
-- 💼 [Portfolio or GitHub profile URL]
-- 📧 [Email - optional]
+**Carl Lhester O Limbaga**
 
 ---
 
