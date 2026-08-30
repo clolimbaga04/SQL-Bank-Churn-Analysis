@@ -294,6 +294,7 @@ ORDER BY
 |------------------|---------------:|------------------:|----------------------:|
 | Active | 5,151 | 735 | 14.27% |
 | Inactive | 4,849 | 1,302 | 26.85% |
+
 Customer activity is a major dividing line in account retention. Active members stay fairly loyal with a churn rate of only 14.27%, while inactive members leave at nearly double that rate (26.85%). In fact, inactive customers account for almost 64% of all lost accounts across the bank.
 
 Unlike age or geography—which a bank cannot change—engagement is something the business can directly influence through targeted marketing, app improvements, and customer outreach. However, member status only tells us if someone is using the bank, not how deeply integrated they are. To see if holding more accounts builds stronger customer loyalty, we next look at how the number of bank products affects churn.
@@ -349,6 +350,7 @@ ORDER BY
 |-------------------|---------------:|------------------:|----------------------:|
 | No Credit Card | 2,945 | 613 | 20.81% |
 | Has Credit Card | 7,055 | 1,424 | 20.18% |
+
 Credit card ownership shows almost no impact on customer retention. Clients without a card leave at 20.81%, while those with a card leave at 20.18%—a virtually flat difference of just 0.63 percentage points.
 
 This is an important finding because it proves that simply putting a credit card in a customer's hands does not build loyalty or prevent them from walking away. Because card ownership alone offers no predictive value for churn, we need to look deeper into financial metrics
@@ -381,6 +383,7 @@ ORDER BY
 | Good (670-739) | 2,428 | 452 | 18.62% |
 | Very Good (740-799) | 1,224 | 252 | 20.59% |
 | Exceptional (800-850) | 655 | 128 | 19.54% |
+
 Using the standard FICO score scale reveals that credit health has almost no bearing on whether a customer stays or leaves. Across every category—from Poor to Exceptional—churn rates stay remarkably flat between 18.62% and 22.02%, representing a narrow spread of just 3.4 percentage points.
 
 Customers with top-tier credit (800+) exit at a 19.54% rate, which is barely different from the 20.56% churn rate of Fair-tier holders. This confirms that creditworthiness alone provides little predictive value for identifying flight risk.
@@ -413,6 +416,7 @@ ORDER BY
 | Medium Balance ($50k - $100k) | 1,509 | 300 | 19.88% |
 | High Balance ($100k - $150k) | 3,830 | 987 | 25.77% |
 | Very High Balance ($150k+) | 969 | 224 | 23.12% |
+
 Account balances reveal a surprising dynamic: having more money in the bank does not guarantee customer loyalty. Customers with zero balances show the lowest churn rate at 13.82%, while those in higher balance tiers ($100k and above) leave at rates between 23% and 26%. In fact, customers with over $100k make up nearly 60% of all churned accounts.
 
 This pattern suggests that higher-wealth clients are more sensitive to competitive interest rates, investment returns, or premium perks offered by rival institutions. Losing these accounts poses a direct risk to the bank's total deposit base.
@@ -436,6 +440,7 @@ GROUP BY
 |----------------|---------------:|---------------:|
 | Stayed | 7,963 | $99,738.39 |
 | Exited | 2,037 | $101,465.68 |
+
 Estimated salary shows almost no meaningful difference between customers who stay with the bank and those who leave. Customers who remained earned an average of $99,738.39, compared with $101,465.68 among customers who churned—a difference of only $1,727.29, or about 1.73%.
 
 This suggests that income level alone is not a strong predictor of customer churn. Customers across different income levels are leaving at relatively similar rates, meaning retention efforts should not focus on salary alone.
@@ -507,13 +512,6 @@ This finding turns the analysis from simply describing who is leaving into ident
 > Note: The findings highlight **associations rather than causation** and should be interpreted accordingly.
 
 ---
-
-
 ## Author
 
 **Carl Lhester O Limbaga**
-
----
-
-*Last updated: [Month YYYY]*
-*If this template helped you, consider starring the repository.*
