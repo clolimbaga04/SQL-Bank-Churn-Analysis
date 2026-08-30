@@ -447,7 +447,7 @@ This suggests that income level alone is not a strong predictor of customer chur
 
 With individual demographic, behavioral, and financial factors now assessed, the next step is to combine the strongest risk indicators—geography, older age groups, high account balances, and inactive status—to identify a clear high-risk customer profile.
 
-## Question 15 (Composite High-Risk Profile): What is the churn rate when stacking all proven high-risk variables into a single composite profile compared to the rest of the customer base?
+## 🚨Question 15 (Composite High-Risk Profile): What is the churn rate when stacking all proven high-risk variables into a single composite profile compared to the rest of the customer base?
 
 Throughout the analysis, we examined each variable individually to distinguish meaningful churn drivers from factors that showed little impact. Financial indicators such as credit score and estimated salary showed almost no relationship with account closures. In contrast, several demographic, behavioral, and product-related factors consistently pointed to customers with higher churn risk.
 
