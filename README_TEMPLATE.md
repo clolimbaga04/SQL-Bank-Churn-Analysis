@@ -21,9 +21,9 @@ A retail bank was experiencing elevated customer attrition but lacked clarity on
 
 ## 🎯 Objectives
 
-- **Primary Objective:** [Identify the key demographic and behavioral drivers of customer churn to guide targeted retention strategies.]
-- **Specific Objective 1:** [Evaluate individual customer variables (geography, age, activity, product depth, FICO tiers, and salary) to separate true churn drivers from non-predictive factors.]
-- **Specific Objective 2:** [Build a composite high-risk profile to pinpoint the most vulnerable customer segment and measure its share of total churn volume.]
+- **Primary Objective:** Identify the key demographic and behavioral drivers of customer churn to guide targeted retention strategies.
+- **Specific Objective 1:** Evaluate individual customer variables (geography, age, activity, product depth, FICO tiers, and salary) to separate true churn drivers from non-predictive factors.
+- **Specific Objective 2:** Build a composite high-risk profile to pinpoint the most vulnerable customer segment and measure its share of total churn volume.
 
 > 💡 *Every analysis decision in this project traces back to one of these objectives.*
 
@@ -174,9 +174,60 @@ This confirmed that:
 - No imputation techniques were required.
 - All customer records were eligible for analysis.
 
+## Analysis 
 
+### 📊 Question 1: Baseline Metric
+**What is the overall baseline customer churn rate across the entire bank?**
+```sql
+SELECT 
+     ROUND(COUNT(exited)*100.0/
+	       (SELECT COUNT(*)
+            FROM bank_churn), 2) AS percent_exited 
+FROM 
+   bank_churn
+WHERE 
+    exited = 1;
+```
+### 🌍 Question 2: Demographic - Geography
+**Does customer geographic location (France, Germany, Spain) influence account closure rates?**
+```sql
+SELECT 
+    geography,
+    COUNT(customer_id) AS total_customers,
+    SUM(exited) AS churned_customers,
+    ROUND(AVG(exited) * 100, 2) AS churn_rate_percentage
+FROM 
+    bank_churn
+GROUP BY 
+    geography
+ORDER BY 
+    churn_rate_percentage DESC;
+```
+| Geography | Total Customers | Churned Customers | Churn Rate Percentage |
+|------------|----------------|------------------|----------------------|
+| Germany | 2,509 | 814 | 32.44% |
+| Spain | 2,477 | 413 | 16.67% |
+| France | 5,014 | 810 | 16.15% |
 
+Customer churn is not spread evenly across regions. While France and Spain stay relatively stable with churn rates around 16%, Germany stands out as a major pain point at 32.44%—practically double the other two markets. In fact, even though German clients make up only a quarter of all customers, they account for almost 40% of everyone who walked away.
 
+Still, a customer's location only tells us *where* people are leaving, not *why*. Living in Germany doesn't automatically make someone cancel their account. To see what is really pushing people out the door, we need to dig into who these customers actually are—starting with their age.
+
+### 👥 Question 3: Demographic - Gender
+**Do male and female customers exhibit different retention and attrition behaviors?**
+```sql
+SELECT
+    gender,
+	COUNT(customer_id),
+	SUM(exited) AS churned_customers,
+	ROUND(AVG(exited) * 100, 2) AS churn_rate_percentage
+FROM
+    bank_churn
+GROUP BY
+    gender
+ORDER BY
+    churn_rate_percentage;
+```
 
 ## 10. Recommendations
 
