@@ -267,6 +267,7 @@ ORDER BY
 | 41-50 | 2,320 | 788 | 33.97% |
 | 51-60 | 797 | 448 | 56.21% |
 | 61+ | 464 | 115 | 24.78% |
+
 Customer attrition is highly concentrated within specific demographic brackets, revealing a stark non-linear relationship between age and churn. While the bank successfully retains younger demographics (maintaining a low 7.5% to 12% churn rate for customers under 40), risk accelerates dramatically in middle age.
 
 The data highlights a severe retention failure among customers in their 50s, where the churn rate peaks at an alarming 56.21%—meaning more than half of the customers in this bracket are leaving. Furthermore, the 41-50 demographic represents the highest absolute volume of lost accounts (788 customers).
