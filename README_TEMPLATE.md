@@ -1,54 +1,21 @@
-# [🏦 Bank Customer Churn: Behavioral & Demographic Drivers of Attrition]
-> *One sentence. What did you analyze, build, or solve - and why does it matter?*
+# 🏦 Bank Customer Churn: Behavioral & Demographic Drivers of Attrition
+> *Decoding Bank Churn: What Really Makes Customers Walk Away?*
 
----
+> When a customer closes their bank account, who do you picture? 🤔💭
 
-## Table of Contents
-1. [Project Overview](#1-project-overview)
-2. [Objectives](#2-objectives)
-3. [Project Scope & Tools](#3-project-scope--tools)
-4. [Repository Structure](#4-repository-structure)
-5. [Data Workflow](#5-data-workflow)
-6. [Data Model & Schema](#6-data-model--schema)
-7. [ERD - Entity Relationship Diagram](#7-erd--entity-relationship-diagram) *(SQL projects)*
-8. [Analysis & Metrics](#8-analysis--metrics)
-9. [Key Insights](#9-key-insights)
-10. [Recommendations](#10-recommendations)
-11. [Assumptions & Limitations](#11-assumptions--limitations)
-12. [Future Enhancements](#12-future-enhancements)
-13. [Deliverables](#13-deliverables)
-14. [Author](#14-author)
+A low-income saver struggling with minimum balance requirements? A borrower with a poor credit score who got rejected for a loan? Or someone with a maxed-out credit card?
+
+Most people assume customer attrition is driven by financial hardship. But when you look closely at raw banking records, the usual assumptions begin to fall apart. High earners walk away just as easily as entry-level workers, and pristine credit scores offer zero guarantee of loyalty.
+
+So if creditworthiness, account balances, and annual salaries don't predict who stays and who leaves... what actually does?
+
+This project conducts an end-to-end SQL investigation across 10,000 retail banking accounts to look past standard financial metrics, separate statistical noise from genuine behavioral signals, and uncover the real root causes of customer flight.
 
 ---
 
 ## 1. Project Overview
 
-<!--
-  Write 3–5 sentences in plain language.
-  Cover: context → problem → approach → outcome.
-  Read it out loud. If it sounds like a form - rewrite it.
-
-  WHAT GOOD LOOKS LIKE:
-  "A mid-size retail business was seeing inconsistent revenue across
-  its regional stores but couldn't identify the root cause. This project
-  explored 18 months of transaction data across five regions to determine
-  whether underperformance was driven by sales volume, pricing, or return
-  rates. The analysis revealed that one region's gap was almost entirely
-  explained by an unusually high return rate on a single product category -
-  a finding invisible in the company's top-level reporting."
-
-  WHAT TO AVOID:
-  "This project analyzes sales data to find trends and insights."
-  (Too vague. Could describe 10,000 projects. Describes none of them.)
--->
-
-**Context:** [The business, research, or personal situation that motivated this project.]
-
-**Problem Statement:** [The specific question or challenge you were addressing.]
-
-**Approach:** [In 1–2 sentences - how did you tackle it?]
-
-**Outcome:** [What did you produce or discover?]
+A retail bank was experiencing elevated customer attrition but lacked clarity on the true behavioral and demographic root causes behind account closures. This project analyzes 10,000 European customer records using PostgreSQL to evaluate data completeness, test common financial assumptions, and identify the key drivers of customer flight. By examining demographic segments, product engagement levels, and multi-variable risk profiles, the analysis isolates high-risk customer segments to support proactive, data-driven retention strategies.
 
 ---
 
