@@ -509,7 +509,7 @@ This finding turns the analysis from simply describing who is leaving into ident
 - **Limited Detail:** Customer service interactions and specific product types are not included.
 - **No External Factors:** Competitor actions and economic conditions are not captured.
 
-> Note: The findings highlight **associations rather than causation** and should be interpreted accordingly.
+> Note: The findings highlight **associations rather than causation**.
 
 ---
 ## Author
